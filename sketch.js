@@ -15,6 +15,8 @@ var engine, world;
 var ground;
 var stand1,stand2;
 var polygon_img;
+var pedra, estilingue;
+
 function preload(){
   polygon_img=loadImage("polygon.png");
 }
@@ -49,15 +51,26 @@ function setup() {
   block16 = new Block(390,155,30,40);
 
   //crie outra prateleira com blocos aqui
-  stand2 = new Stand(700,200,200,10);
-
+  stand2 = new Stand(690,200,200,10);
+  block17 = new Block(630,175,30,40);
+  block18 = new Block(660,175,30,40);
+  block19 = new Block(690,175,30,40);
+  block20 = new Block(720,175,30,40);
+  block21 = new Block(750,175,30,40);
+  //level three
+  block22 = new Block(660,135,30,40);
+  block23 = new Block(690,135,30,40);
+  block24 = new Block(720,135,30,40);
+  //top
+  block25 = new Block(690,95,30,40);
 
   /*crie um corpo Matter para ser a pedra.
   não esqueça de adicioná-lo ao mundo*/
-  
+  pedra = Bodies.circle(50,200,20);
+  World.add(world,pedra);
 
   //crie um objeto da classe estilingue, use-o para ligar o corpo da pedra e um pontoB
-
+  estilingue = new Estilingue(pedra,{x:100,y:200});
 }
 function draw() {
   background(56,44,44); 
@@ -93,19 +106,39 @@ function draw() {
   block16.display();
  
   //faça o display da sua segunda prateleira com blocos
+  fill("crimson")
   stand2.display();
+  fill("skyblue");
+  block17.display();
+  block18.display();
+  block19.display();
+  block20.display();
+  block21.display();
+  fill("pink");
+  block22.display();
+  block23.display();
+  block24.display();
+  fill("turquoise");
+  block25.display();
 
   //use o image() para adicionar a imagem polygon_img (já carregada) ao seu corpo de pedra
-  //lembre-se de ajustar o imageMode() para center
-
+  //lembre-se de alterar o imageMode para center
+  imageMode(CENTER);
+  image(polygon_img,pedra.position.x, pedra.position.y,40,40);
   //faça o display do estilingue
-
+  estilingue.display()
 
 }
 
 //adicione o evento de mouseDragged() para puxar a pedra com o mouse
+function mouseDragged(){
+  pedra.position.x = mouseX;
+  pedra.position.y = mouseY;
+}
 
 //adicione o evento de mouseReleased() para lançar a pedra nas pirâmides de blocos, usando o método voar()
 //lembre-se de criar o método voar() na sua classe (definindo bodyA como null)
-
+function mouseReleased(){
+  estilingue.voar();
+}
 //adicione opções aos blocos, teste e se certifique de que os blocos caem quando são atingidos
